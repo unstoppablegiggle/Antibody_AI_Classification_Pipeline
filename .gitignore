@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+.conda/
+.mamba/
+data/
+artifacts/
+models/
+outputs/
+.snakemake/
