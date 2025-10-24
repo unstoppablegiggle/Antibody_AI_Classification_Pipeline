@@ -14,14 +14,18 @@ args = parser.parse_args()
 oas_df = pd.read_csv(args.df1)
 thera_df = pd.read_csv(args.df2)
 
-# get sequences and add classes for downstream classification
+# get sequences and add classes and unique ids for downstream classification
 
 oas_clean = oas_df[['sequence']]
-oas_clean.insert(1, 'class', 0)
+oas_clean["sequence_id"] = [f"oas_{i}" for i in range(len(oas_clean))]
+oas_clean["class"] = 0
+oas_clean = oas_clean[['sequence_id', 'sequence', 'class']]
 
 thera_clean = thera_df[['HeavySequence']]
 thera_clean = thera_clean.rename(columns={'HeavySequence': 'sequence'})
-thera_clean.insert(1, 'class', 1)
+thera_clean["sequence_id"] = [f"thera_{i}" for i in range(len(thera_clean))]
+thera_clean["class"] = 1
+thera_clean = thera_clean[['sequence_id', 'sequence', 'class']]
 
 # Find shortest df
 min_rows = min(len(oas_clean), len(thera_clean))
@@ -41,7 +45,7 @@ thera_clean = match_df(thera_clean, min_rows)
 
 frames = [oas_clean, thera_clean]
 
-# join and randomize dfs
-output_df = pd.concat(frames, ignore_index=True).sample(frac=1, random_state=343)
+# join and randomize
+output_df = pd.concat(frames, ignore_index=True).sample(frac=1, random_state=343).reset_index(drop=True)
 
 output_df.to_csv(args.out, index=False)
