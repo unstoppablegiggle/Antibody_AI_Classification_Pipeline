@@ -11,7 +11,7 @@ args = parser.parse_args()
 
 # load data in pandas dfs
 
-oas_df = pd.read_csv(args.df1)
+oas_df = pd.read_csv(args.df1, skiprows=1, low_memory=False) #skip metadata and remove dtype warning
 thera_df = pd.read_csv(args.df2)
 
 # get sequences and add classes and unique ids for downstream classification

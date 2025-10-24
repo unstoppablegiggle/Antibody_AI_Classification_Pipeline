@@ -1,0 +1,11 @@
+name: ab_project
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.10
+  - pandas
+  - snakemake
+  - pytorch
