@@ -4,8 +4,6 @@ __pycache__/
 .env
 .conda/
 .mamba/
-data/
 artifacts/
 models/
-outputs/
 .snakemake/
