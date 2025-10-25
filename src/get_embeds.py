@@ -55,9 +55,6 @@ def get_sequence_embeddings(encoded_seqs, model_outputs):
 
     for s, m in zip(encoded_seqs, model_outputs):
         mask = s['attention_mask'].float()
-        d = {k: v for k, v in torch.nonzero(mask).cpu().numpy()}  # dict of sep tokens
-        for i in d:
-            mask[i, d[i]] = 0
         mask[:, 0] = 0.0  # make cl tokens invisible
         mask = mask.unsqueeze(-1).expand(m['last_hidden_state'].size())
 
@@ -73,7 +70,11 @@ encoded_seqs, model_output = encode_seqs(seqs, tokenizer, model)
 
 mean_embeddings = get_sequence_embeddings(encoded_seqs, model_output)
 
-output_df = df.copy()
+embed_names = [f"em_{i:03d}" for i in range(len(mean_embeddings[0]))]
+
+embeddings_df = pd.DataFrame(mean_embeddings, columns=embed_names)
+
+output_df = df.copy().join(embeddings_df)
 output_df['embeds'] = mean_embeddings
 
 output_df.to_csv(args.out, index=False)
