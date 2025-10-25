@@ -75,6 +75,5 @@ embed_names = [f"em_{i:03d}" for i in range(len(mean_embeddings[0]))]
 embeddings_df = pd.DataFrame(mean_embeddings, columns=embed_names)
 
 output_df = df.copy().join(embeddings_df)
-output_df['embeds'] = mean_embeddings
 
 output_df.to_csv(args.out, index=False)
