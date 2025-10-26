@@ -21,7 +21,7 @@ oas_clean["sequence_id"] = [f"oas_{i}" for i in range(len(oas_clean))]
 oas_clean["class"] = 0
 oas_clean = oas_clean[['sequence_id', 'sequence', 'class']]
 
-thera_clean = thera_df[['HeavySequence']]
+thera_clean = thera_df[['HeavySequence']].drop_duplicates(subset='HeavySequence')
 thera_clean = thera_clean.rename(columns={'HeavySequence': 'sequence'})
 thera_clean["sequence_id"] = [f"thera_{i}" for i in range(len(thera_clean))]
 thera_clean["class"] = 1
