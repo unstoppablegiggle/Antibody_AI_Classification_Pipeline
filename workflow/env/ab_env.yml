@@ -9,3 +9,4 @@ dependencies:
   - pandas
   - snakemake
   - pytorch
+  - scikit-learn
